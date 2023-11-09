@@ -7,7 +7,7 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class Cliente_Swing {
+public class ClienteSwing {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Chat Cliente");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -20,18 +20,17 @@ public class Cliente_Swing {
 
         JTextField messageField = new JTextField();
         messageField.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent event) {
                 try {
                     Socket cliente = new Socket("127.0.0.1", 10000);
                     PrintStream out = new PrintStream(cliente.getOutputStream());
+                    chatArea.append("Eu: " + messageField.getText() + "\n");
                     out.println(messageField.getText());
                     out.close();
                     cliente.close();
                     messageField.setText("");
-                } catch (UnknownHostException ex) {
-                    ex.printStackTrace();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         });
